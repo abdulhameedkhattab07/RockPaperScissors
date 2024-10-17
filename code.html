@@ -1,52 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title>Rock Paper Scissors</title>
 </head>
-<body>
-    <script>
-        console.log("Rock Paper Scissors Game!");
-        let humanScore = 0;
 
-        function getComputerChoice(){
+<body>
+
+    <button id="rock" onclick="playRound('rock')">Rock</button>
+    <button id="paper" onclick="playRound('paper')">Paper</button>
+    <button id="scissors" onclick="playRound('scissors')">Scissors</button>
+
+    <div id="result"></div>
+    <script>
+        let humanScore = 0;
+        let computerScore = 0;
+
+        function getComputerChoice() {
             const choices = ['rock', 'paper', 'scissors'];
             const randomIndex = Math.floor(Math.random() * 3);
             return choices[randomIndex];
         }
 
-        function getHumanChoice(){
-            const HumanChoice = prompt('Enter rock, paper, or scissors').toLowerCase();
-            return HumanChoice;
-        }
+        // function getHumanChoice() {
+        //     const choice = document.querySelectorAll('button');
+        //     const HumanChoice = prompt('Enter rock, paper, or scissors').toLowerCase();
+        //     return HumanChoice;
+        // }
 
-        function determineWinner(HumanChoice, computerChoice){
-            if (HumanChoice === computerChoice){
+        function determineWinner(HumanChoice, computerChoice) {
+            if (HumanChoice === computerChoice) {
+                humanScore === humanScore;
+                computerScore === computerScore;
                 return "Tie!";
-            } else if((HumanChoice === 'rock' && computerChoice === 'scissors') || (HumanChoice === 'paper' && computerChoice === 'rock') || (HumanChoice === 'scissors' && computerChoice === 'paper')){
+            } else if ((HumanChoice === 'rock' && computerChoice === 'scissors') || (HumanChoice === 'paper' && computerChoice === 'rock') || (HumanChoice === 'scissors' && computerChoice === 'paper')) {
                 humanScore++;
                 return "You win!";
-            } else{
+            } else {
+                computerScore++;
                 return "You lose!";
             }
         }
 
-        function playRound(){
-            const computerChoice = getComputerChoice();
-            const humanChoice = getHumanChoice();
-            console.log(`You chose: ${humanChoice}`);
-            console.log(`Computer chose: ${computerChoice}`);
-
-            console.log(determineWinner(humanChoice, computerChoice));
-        }
-
-        function playGame(noOfTimes){
-            for(let i = 1; i <= noOfTimes; i++){
-                playRound();
+        function determineGameWinner(computerScore, humanScore){
+            if(computerScore > humanScore){
+                return 'Player Lose!, Computer Won';
+            } else if(computerScore < humanScore){
+                return 'Player Won!, Computer Lose';
             }
         }
 
-        playGame(2);
-        console.log(`You scored ${humanScore}`);
+        const result = document.querySelector('#result');
+        const choiceText = document.createElement('p');
+        const answerText = document.createElement('p');
+        let choice;
+        let answer;
+        let winner;
+
+        function playRound(Choice) {
+            const computerChoice = getComputerChoice();
+            const humanChoice = Choice;
+            choice = `You chose: ${humanChoice}, Computer chose: ${computerChoice}`;
+            answer = determineWinner(humanChoice, computerChoice);
+            choiceText.textContent = choice;
+            answerText.textContent = answer;
+            result.appendChild(choiceText);
+            result.appendChild(answerText);
+            if (humanScore >= 5 || computerScore >= 5) {
+                alert(`You: ${humanScore}, Computer: ${computerScore}`)
+                winner = determineGameWinner(computerScore, humanScore);
+                answerText.textContent = winner;
+            }
+        }
+
+        // function playGame(noOfTimes) {
+        //     for (let i = 1; i <= noOfTimes; i++) {
+        //         playRound();
+        //     }
+        // }
+
+        
+
+        // playGame(2);
+        
     </script>
 </body>
+
 </html>
